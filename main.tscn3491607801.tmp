@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://futkbwki6664" path="res://main.gdshader" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://bkxchsplg1irv" path="res://post.gdshader" id="2_0xm2m"]
 [ext_resource type="Shader" uid="uid://d3diudicuj6yd" path="res://drawing.gdshader" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://b0w5ue5wf6bva" path="res://testtexture2.png" id="4_lquwl"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_tqqyt"]
 viewport_path = NodePath("SimViewport")
@@ -16,8 +17,6 @@ shader = ExtResource("2_0xm2m")
 shader_parameter/wavecolor = Vector3(1, 0, 0.5)
 shader_parameter/stonecolor = Vector3(0.75, 0.75, 0.75)
 shader_parameter/magnitude = false
-
-[sub_resource type="ImageTexture" id="ImageTexture_lquwl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 shader = ExtResource("4_1bvp3")
@@ -52,15 +51,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DrawingRect" type="TextureRect" parent="." unique_id=464127350]
+visible = false
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ImageTexture_lquwl")
+texture = ExtResource("4_lquwl")
 
 [node name="DrawingShader" type="ColorRect" parent="." unique_id=319819877]
+visible = false
 z_index = 1
 material = SubResource("ShaderMaterial_h2yge")
 anchors_preset = 15

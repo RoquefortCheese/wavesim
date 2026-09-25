@@ -19,7 +19,7 @@ void fragment() {
 	vec3 self = texture(screen, UV).xyz;
 	float pos;
 	float vel;
-	switch (int(self.z * 256.)) {
+	switch (int(self.z * 8.)) {
 		case 0:  // standard
 			pos = storetoval(self.x);
 			vel = storetoval(self.y);
@@ -45,9 +45,10 @@ void fragment() {
 			vel = 0.;
 			break;
 		case 2:  // oscillator
-			float osctime = TIME * PI * speed;
+			float factor = PI * speed;
+			float osctime = TIME * factor;
 			pos = sin(osctime);
-			vel = cos(osctime);
+			vel = cos(osctime) * factor;
 			break;
 	}
 	COLOR.x = valtostore(pos);

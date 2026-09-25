@@ -11,7 +11,7 @@ float storetoval(float stored) {
 
 void fragment() {
 	vec3 self = texture(screen, UV).xyz;
-	switch (int(self.z * 256.)) {
+	switch (int(self.z * 8.)) {
 		case 0:
 		case 2:
 			float waveval = clamp(storetoval(self.x), -2., 2.) / 2.;
@@ -22,5 +22,4 @@ void fragment() {
 			COLOR.rgb = stonecolor;
 			break;
 	}
-	
 }
