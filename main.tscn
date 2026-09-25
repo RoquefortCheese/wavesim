@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://bcnu6f7668ro4"]
+
+[ext_resource type="Script" uid="uid://bcutm6hc4f5xs" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="Shader" uid="uid://futkbwki6664" path="res://main.gdshader" id="1_ig7tw"]
+[ext_resource type="Shader" uid="uid://bkxchsplg1irv" path="res://post.gdshader" id="2_0xm2m"]
+[ext_resource type="Shader" uid="uid://d3diudicuj6yd" path="res://drawing.gdshader" id="4_1bvp3"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tqqyt"]
+viewport_path = NodePath("SimViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tqqyt"]
+shader = ExtResource("1_ig7tw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ig7tw"]
+shader = ExtResource("2_0xm2m")
+shader_parameter/wavecolor = Vector3(1, 0, 0.5)
+shader_parameter/stonecolor = Vector3(0.75, 0.75, 0.75)
+shader_parameter/magnitude = false
+
+[sub_resource type="ImageTexture" id="ImageTexture_h2yge"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
+shader = ExtResource("4_1bvp3")
+
+[node name="Main" type="Node" unique_id=1781353615]
+script = ExtResource("1_h2yge")
+
+[node name="SimTexture" type="TextureRect" parent="." unique_id=737953225]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_tqqyt")
+
+[node name="SimViewport" type="SubViewport" parent="." unique_id=732508478]
+
+[node name="SimShader" type="ColorRect" parent="SimViewport" unique_id=1875185825]
+visible = false
+material = SubResource("ShaderMaterial_tqqyt")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VisualShader" type="ColorRect" parent="." unique_id=2082077059]
+material = SubResource("ShaderMaterial_ig7tw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DrawingRect" type="TextureRect" parent="." unique_id=464127350]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ImageTexture_h2yge")
+
+[node name="DrawingShader" type="ColorRect" parent="." unique_id=319819877]
+visible = false
+z_index = 1
+material = SubResource("ShaderMaterial_h2yge")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
