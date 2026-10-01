@@ -50,6 +50,12 @@ void fragment() {
 			pos = sin(osctime);
 			vel = cos(osctime) * factor;
 			break;
+		case 3:  // offset oscillator
+			float factor = PI * speed;
+			float osctime = TIME * factor;
+			pos = -sin(osctime);
+			vel = -cos(osctime) * factor;
+			break;
 	}
 	COLOR.x = valtostore(pos);
 	COLOR.y = valtostore(vel);

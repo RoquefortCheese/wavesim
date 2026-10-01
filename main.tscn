@@ -4,6 +4,7 @@
 [ext_resource type="Shader" uid="uid://futkbwki6664" path="res://main.gdshader" id="1_ig7tw"]
 [ext_resource type="Shader" uid="uid://bkxchsplg1irv" path="res://post.gdshader" id="2_0xm2m"]
 [ext_resource type="Shader" uid="uid://d3diudicuj6yd" path="res://drawing.gdshader" id="4_1bvp3"]
+[ext_resource type="Shader" uid="uid://br8x53885idrf" path="res://pallette.gdshader" id="5_lquwl"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_tqqyt"]
 viewport_path = NodePath("SimViewport")
@@ -14,13 +15,21 @@ shader = ExtResource("1_ig7tw")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ig7tw"]
 shader = ExtResource("2_0xm2m")
 shader_parameter/wavecolor = Vector3(1, 0, 0.5)
+shader_parameter/magnicolor = Vector3(0, 1, 0.75)
 shader_parameter/stonecolor = Vector3(0.75, 0.75, 0.75)
 shader_parameter/magnitude = false
 
 [sub_resource type="ImageTexture" id="ImageTexture_lquwl"]
 
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7mycd"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h2yge"]
 shader = ExtResource("4_1bvp3")
+shader_parameter/screen = SubResource("NoiseTexture2D_7mycd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1bvp3"]
+shader = ExtResource("5_lquwl")
+shader_parameter/samplecol = Vector3(0, 0, 0)
 
 [node name="Main" type="Node" unique_id=1781353615]
 script = ExtResource("1_h2yge")
@@ -68,3 +77,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="PalletteSample" type="ColorRect" parent="." unique_id=367798424]
+z_index = 2
+material = SubResource("ShaderMaterial_1bvp3")
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = -16.0
+grow_vertical = 0
