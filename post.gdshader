@@ -1,5 +1,6 @@
 shader_type canvas_item;
-uniform sampler2D screen: hint_screen_texture;
+uniform highp sampler2D screen: hint_screen_texture;
+uniform sampler2D pxtype;
 uniform vec3 wavecolor;
 uniform vec3 magnicolor;
 uniform vec3 stonecolor;
@@ -12,7 +13,7 @@ float storetoval(float stored) {
 
 void fragment() {
 	vec3 self = texture(screen, UV).xyz;
-	switch (int(self.z * 8.)) {
+	switch (int(round(texture(pxtype, UV).r * 8.))) {
 		case 0:
 		case 2:
 		case 3:

@@ -3,8 +3,8 @@ enum Zindex {STANDARD, STONE, OSC, ANTI}
 const pallettecols: Dictionary[Zindex, Color] = {
 	Zindex.STANDARD: Color.BLACK,
 	Zindex.STONE: Color.WHITE * 0.75,
-	Zindex.OSC: Color.RED,
-	Zindex.ANTI: Color.BLUE,
+	Zindex.OSC: Color.BLUE,
+	Zindex.ANTI: Color.RED,
 }
 
 var drawing := false
@@ -22,14 +22,14 @@ func reset() -> void:
 	var zimage: Image = $DrawingRect.texture.get_image()
 	for x in 512:
 		for y in 512:
-			#var zindex = Zindex.STANDARD
-			#var disp = Vector2(x, y) / 256. - Vector2.ONE
-			#if disp.length() < 0.5:
-				#zindex = Zindex.STONE
-			#if (Vector2.ONE - abs(disp)).length() < 2 ** -5.:
-				#zindex = Zindex.OSC
-			var zval: float = round(zimage.get_pixel(x, y).r * 8) / 8.
-			image.set_pixel(x, y, Color(valtostore(0), valtostore(0), zval))
+			##var zindex = Zindex.STANDARD
+			##var disp = Vector2(x, y) / 256. - Vector2.ONE
+			##if disp.length() < 0.5:
+				##zindex = Zindex.STONE
+			##if (Vector2.ONE - abs(disp)).length() < 2 ** -5.:
+				##zindex = Zindex.OSC
+			#var zval: float = round(zimage.get_pixel(x, y).r * 8) / 8.
+			image.set_pixel(x, y, Color(valtostore(0), valtostore(0), 0))
 	$SimViewport/SimShader.material.set_shader_parameter("screen", ImageTexture.create_from_image(image))
 	for frame in 4:
 		await get_tree().process_frame
@@ -39,7 +39,6 @@ func valtostore(val: float) -> float:
 	return (val + 2) / 4
 
 func larpdraw(mousepos: Vector2, image: Image) -> void:
-	print(1)
 	if not lastmousegood:
 		lastmousepos = mousepos
 		lastmousegood = true
@@ -80,7 +79,10 @@ func _process(_delta: float) -> void:
 	else:
 		var image: Image = $SimTexture.texture.get_image()
 		var texture := ImageTexture.create_from_image(image)
+		var pxtype := ImageTexture.create_from_image($DrawingRect.texture.get_image())
 		$SimViewport/SimShader.material.set_shader_parameter("screen", texture)
+		$SimViewport/SimShader.material.set_shader_parameter("pxtype", pxtype)
+		$VisualShader.material.set_shader_parameter("pxtype", pxtype)
 
 func startdrawing() -> void:
 	var bytes := PackedByteArray()

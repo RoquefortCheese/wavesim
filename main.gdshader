@@ -1,6 +1,7 @@
 shader_type canvas_item;
-uniform sampler2D screen;
-const float c2 = 1.;
+uniform highp sampler2D screen;
+uniform sampler2D pxtype;
+const float c2 = 2.;
 const float vm = 0.1;
 const int sampr = 0;
 const float speed = 1.5;
@@ -15,11 +16,19 @@ float valtostore(float val) {
 	return (val + 2.) / 4.;
 }
 
+float pointpos(vec2 uv, vec2 sps, vec2 disp, int mag) {
+	vec2 point = uv + (disp * float(mag)) * sps;
+	if (min(point.x, point.y) < 0. || max(point.x, point.y) >= 1.) {
+		return 0.;
+	}
+	return storetoval(texture(screen, point).x);
+}
+
 void fragment() {
-	vec3 self = texture(screen, UV).xyz;
+	vec2 self = texture(screen, UV).xy;
 	float pos;
 	float vel;
-	switch (int(self.z * 8.)) {
+	switch (int(round(texture(pxtype, UV).r * 8.))) {
 		case 0:  // standard
 			pos = storetoval(self.x);
 			vel = storetoval(self.y);
@@ -28,9 +37,12 @@ void fragment() {
 				for (int delta = -sampr; delta <= sampr; delta++) {
 					vec2 disp = vec2(0);
 					disp[axis] = 1.;
-					float left = storetoval(texture(screen, UV + (disp * float(delta - 1)) * SCREEN_PIXEL_SIZE).x);
-					float middle = storetoval(texture(screen, UV + (disp * float(delta)) * SCREEN_PIXEL_SIZE).x);
-					float right = storetoval(texture(screen, UV + (disp * float(delta + 1)) * SCREEN_PIXEL_SIZE).x);
+					//float left = storetoval(texture(screen, UV + (disp * float(delta - 1)) * SCREEN_PIXEL_SIZE).x);
+					//float middle = storetoval(texture(screen, UV + (disp * float(delta)) * SCREEN_PIXEL_SIZE).x);
+					//float right = storetoval(texture(screen, UV + (disp * float(delta + 1)) * SCREEN_PIXEL_SIZE).x);
+					float left = pointpos(UV, SCREEN_PIXEL_SIZE, disp, delta - 1);
+					float middle = pointpos(UV, SCREEN_PIXEL_SIZE, disp, delta);
+					float right = pointpos(UV, SCREEN_PIXEL_SIZE, disp, delta + 1);
 					float ld = middle - left;
 					float rd = right - middle;
 					float slopeslope = rd - ld;
@@ -59,5 +71,4 @@ void fragment() {
 	}
 	COLOR.x = valtostore(pos);
 	COLOR.y = valtostore(vel);
-	COLOR.z = self.z;
 }
